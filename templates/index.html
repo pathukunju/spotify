@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>spotify</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <script src="https://kit.fontawesome.com/b08614ab99.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <div>
+            <a href="">
+                <img src="../static/images/1.png">
+            </a>
+        </div>
+        <div>
+            <a href="" class="red" id="blue">
+            
+                <img src="{{profile_pic}}">
+                <p>{{account}}</p>
+            </a>
+        </div>
+    </header>
+    <form action="{{url_for('index')}}" id="card" method="POST">
+        <select name="option">
+            <option value="artist">Artist</option>
+            <option value="track">Track</option>
+        </select>
+        
+        <input type="text" placeholder="" name="spot">
+        <button><i class="fa-sharp fa-solid fa-magnifying-glass"></i></button>
+    </form>
+    <section class="main flex">
+    
+    {% if option == 'artist' %}
+        {% if data%}
+
+            {% for artists in data['artists']['items']%}
+
+            <div class="cell">
+                <a class="" href="{{artists['external_urls']['spotify']}}">
+                    <div>
+                        {% if artists['images'][0]%}
+                            {% set image = artists['images'][0] %}
+                    
+                            <img src="{{image['url']}}">
+                        {% endif %}  
+                    </div>
+                    <div class="text">
+                        
+                        <b>{{artists['name']}}</b>
+                        <p></p>
+                    </div>
+            </a>
+            </div>
+            
+            {% endfor %}
+        {% endif %}
+    {% elif option == 'track' %}
+        {% if data%}
+
+            {% for track in data['tracks']['items']%}
+
+            <div class="cell">
+                <a class="" href="{{track['external_urls']['spotify']}}">
+                    <div>
+                        {% if track['album']['images'][0]%}
+                            {% set image = track ['album']['images'][0] %}
+                    
+                            <img src="{{image['url']}}">
+                        {% endif %}  
+                    </div>
+                    <div class="text">
+                        
+                        <b>{{track['name']}}</b>
+                        <p></p>
+                    </div>
+            </a>
+            </div>
+            
+            {% endfor %}
+        {% endif %}
+    {% else %}
+    {% endif %}    
+    </section>
+</body>
+</html>
